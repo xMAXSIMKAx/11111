@@ -1,0 +1,155 @@
+@startuml
+class org.example.app.view.UserReadByIdView {
++ Map<String,String> getData()
++ void getOutput(String)
+}
+
+class org.example.app.App {
++ {static} void main(String[])
+}
+
+class org.example.app.view.AppView {
+~ Scanner scanner
+~ int option
++ int chooseOption()
+- void showMenu()
++ void getOutput(String)
+}
+
+
+class org.example.app.service.UserService {
+~ UserRepository repository
++ String createUser(Map<String,String>)
++ String readUser()
++ String updateUser(Map<String,String>)
++ String deleteUser(Map<String,String>)
++ String readUserById(Map<String,String>)
+}
+
+
+class org.example.app.controller.AppController {
+~ AppView view
+~ AppService service
++ void runApp()
+}
+
+
+class org.example.app.entity.UserMapper {
++ User mapUserData(Map<String,String>)
+}
+
+interface org.example.app.repository.AppRepository {
+~ String create(T)
+~ Optional<List<T>> read()
+~ String update(T)
+~ String delete(Long)
+~ Optional<T> readById(Long)
+}
+
+class org.example.app.entity.User {
+- Long id
+- String name
+- String email
++ Long getId()
++ void setId(Long)
++ String getName()
++ void setName(String)
++ String getEmail()
++ void setEmail(String)
++ String toString()
+}
+
+
+class org.example.app.utils.HibernateUtil {
+- {static} SessionFactory sessionFactory
++ {static} SessionFactory getSessionFactory()
+- {static} Configuration getConfiguration()
+}
+
+
+class org.example.app.utils.Constants {
++ {static} String WRONG_EMAIL_MSG
++ {static} String WRONG_ID_MSG
++ {static} String DATA_ABSENT_MSG
++ {static} String DATA_INSERT_MSG
++ {static} String DATA_UPDATE_MSG
++ {static} String DATA_DELETE_MSG
++ {static} String APP_CLOSE_MSG
++ {static} String INPUT_REQ_MSG
++ {static} String INCORRECT_OPTION_MSG
++ {static} String ID_NO_EXISTS_MSG
+}
+
+class org.example.app.controller.UserController {
+~ UserService service
++ void createUser()
++ void readUser()
++ void updateUser()
++ void deleteUser()
++ void readUserById()
+}
+
+
+class org.example.app.repository.impl.UserRepository {
++ String create(User)
++ Optional<List<User>> read()
++ String update(User)
++ String delete(Long)
++ Optional<User> readById(Long)
+}
+
+class org.example.app.view.UserUpdateView {
++ Map<String,String> getData()
++ void getOutput(String)
+}
+
+class org.example.app.utils.UserValidator {
++ Map<String,String> validateUserData(Map<String,String>)
+}
+
+class org.example.app.exceptions.OptionException {
+}
+class org.example.app.service.AppService {
+~ UserController controller
++ void filterChoice(int)
+}
+
+
+class org.example.app.view.UserCreateView {
++ Map<String,String> getData()
++ void getOutput(String)
+}
+
+class org.example.app.exceptions.UserException {
+~ Map<String,String> errors
++ String getErrors(Map<String,String>)
+}
+
+
+class org.example.app.view.UserDeleteView {
++ Map<String,String> getData()
++ void getOutput(String)
+}
+
+class org.example.app.view.UserReadView {
++ void getOutput(String)
+}
+
+class org.example.app.utils.AppValidator {
++ {static} String ID_RGX
++ {static} String EMAIL_RGX
++ {static} boolean isIdValid(String)
++ {static} boolean isEmailValid(String)
+}
+
+
+class org.example.app.utils.AppStarter {
++ {static} void startApp()
+}
+
+
+
+org.example.app.repository.AppRepository <|.. org.example.app.repository.impl.UserRepository
+org.example.app.exceptions.Exception <|-- org.example.app.exceptions.OptionException
+org.example.app.exceptions.RuntimeException <|-- org.example.app.exceptions.UserException
+@enduml
